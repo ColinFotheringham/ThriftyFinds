@@ -1,69 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Website</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            color: #333;
-            background-color: #f9f9f9;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thrifty Finds – Pre-loved Treasures</title>
+  <meta name="description" content="Unique second-hand finds from the thrift store. Affordable, one-of-a-kind items." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Tailwind config for thrift-store vibe -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            thrift: {
+              50:  '#faf6f1',
+              100: '#f0e6d8',
+              200: '#e0cbb3',
+              300: '#c9a88a',
+              400: '#b08a66',
+              500: '#96734f',
+              600: '#7a5c3f',
+              700: '#5f4732',
+              800: '#463426',
+              900: '#2e2219',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Playfair Display', 'Georgia', 'serif'],
+          }
         }
-        header {
-            border-bottom: 2px solid #eaeaea;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        h1 {
-            color: #111;
-            margin: 0;
-        }
-        main {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        footer {
-            margin-top: 50px;
-            text-align: center;
-            font-size: 0.85em;
-            color: #666;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-    </style>
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    
+    /* Subtle hover lift for product cards */
+    .product-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+    
+    /* Smooth image zoom on hover */
+    .product-img {
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-img {
+      transform: scale(1.05);
+    }
+  </style>
 </head>
-<body>
+<body class="bg-thrift-50 text-thrift-900 antialiased">
 
-    <header>
-        <h1>Welcome to My Website</h1>
-    </header>
+  <!-- ========== HEADER ========== -->
+  <header class="bg-white/90 backdrop-blur-md border-b border-thrift-200 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <span class="text-2xl">🧵</span>
+        <span class="font-display text-2xl font-bold text-thrift-800 tracking-tight">Thrifty Finds</span>
+      </a>
+      
+      <nav class="hidden sm:flex items-center gap-8 text-sm font-medium text-thrift-700">
+        <a href="#products" class="hover:text-thrift-900 transition">Shop</a>
+        <a href="#about" class="hover:text-thrift-900 transition">About</a>
+        <a href="#contact" class="hover:text-thrift-900 transition">Contact</a>
+      </nav>
+      
+      <!-- Mobile menu button (simple) -->
+      <button id="mobile-menu-btn" class="sm:hidden p-2 rounded-lg hover:bg-thrift-100">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Mobile nav -->
+    <div id="mobile-menu" class="hidden sm:hidden border-t border-thrift-200 bg-white">
+      <div class="px-4 py-3 flex flex-col gap-3 text-sm font-medium text-thrift-700">
+        <a href="#products" class="py-2">Shop</a>
+        <a href="#about" class="py-2">About</a>
+        <a href="#contact" class="py-2">Contact</a>
+      </div>
+    </div>
+  </header>
 
-    <main>
-        <h2>About This Site</h2>
-        <p>This is a simple, clean, single-file HTML website. It includes embedded styles so you don't need a separate CSS file, making it perfect for your first GitHub Pages deployment!</p>
+  <!-- ========== HERO ========== -->
+  <section class="relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <div class="max-w-2xl">
+        <p class="text-thrift-600 font-medium mb-3 tracking-wide uppercase text-sm">Pre-loved • Unique • Affordable</p>
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-thrift-900 leading-tight mb-6">
+          One-of-a-kind finds<br>from the thrift store
+        </h1>
+        <p class="text-lg text-thrift-700 mb-8 leading-relaxed">
+          Every item is carefully selected, cleaned, and ready for its next chapter. 
+          No two pieces are the same — just like the stories they carry.
+        </p>
+        <a href="#products" 
+           class="inline-flex items-center gap-2 bg-thrift-700 hover:bg-thrift-800 text-white font-semibold px-6 py-3.5 rounded-xl transition shadow-lg shadow-thrift-700/20">
+          Browse the finds
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Decorative background element -->
+    <div class="absolute top-0 right-0 -z-10 w-1/2 h-full bg-gradient-to-l from-thrift-100/80 to-transparent hidden lg:block"></div>
+  </section>
+
+  <!-- ========== PRODUCTS ========== -->
+  <section id="products" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-thrift-900 mb-3">Current Finds</h2>
+        <p class="text-thrift-600 max-w-xl mx-auto">All items are second-hand, inspected, and ready to ship. Prices include basic packaging.</p>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+
+        <!-- Product 1 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=750&fit=crop" 
+                 alt="Vintage denim jacket" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Vintage Denim Jacket</h3>
+            <p class="text-sm text-thrift-600 mb-3">Classic 90s wash, size M. Light fading, great condition.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$32</span>
+              <!-- REPLACE the href below with your real Stripe Payment Link -->
+              <a href="#buy" 
+                 class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600&h=750&fit=crop" 
+                 alt="Ceramic vase" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Hand-Thrown Ceramic Vase</h3>
+            <p class="text-sm text-thrift-600 mb-3">Earth-tone glaze, approx 9" tall. Perfect shelf accent.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$18</span>
+              <a href="#buy" class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&h=750&fit=crop" 
+                 alt="Leather-bound books" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Vintage Book Bundle</h3>
+            <p class="text-sm text-thrift-600 mb-3">Set of 4 hardcovers, 1950s–70s. Great shelf decor or reading.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$24</span>
+              <a href="#buy" class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 4 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=750&fit=crop" 
+                 alt="Wool sweater" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Chunky Wool Sweater</h3>
+            <p class="text-sm text-thrift-600 mb-3">Neutral oatmeal color, size L. Soft and warm.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$27</span>
+              <a href="#buy" class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 5 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=600&h=750&fit=crop" 
+                 alt="Brass candlesticks" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Brass Candlestick Pair</h3>
+            <p class="text-sm text-thrift-600 mb-3">Solid brass, classic shape. Light patina, polished.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$22</span>
+              <a href="#buy" class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 6 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&h=750&fit=crop" 
+                 alt="Vintage camera" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Vintage Film Camera</h3>
+            <p class="text-sm text-thrift-600 mb-3">35mm point-and-shoot. Works, includes original strap.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$38</span>
+              <a href="#buy" class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 7 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=750&fit=crop" 
+                 alt="Canvas tote bag" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Canvas Market Tote</h3>
+            <p class="text-sm text-thrift-600 mb-3">Sturdy natural canvas, roomy. Minimal wear.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$14</span>
+              <a href="#buy" class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 8 -->
+        <article class="product-card bg-thrift-50 rounded-2xl overflow-hidden border border-thrift-100">
+          <div class="aspect-[4/5] overflow-hidden bg-thrift-100">
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=750&fit=crop" 
+                 alt="Macrame wall hanging" 
+                 class="product-img w-full h-full object-cover"
+                 loading="lazy">
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg text-thrift-900 mb-1">Macrame Wall Hanging</h3>
+            <p class="text-sm text-thrift-600 mb-3">Boho style, natural cotton. Approx 24" long.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xl font-bold text-thrift-800">$19</span>
+              <a href="#buy" class="buy-btn bg-thrift-700 hover:bg-thrift-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                Buy
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about" class="py-16 sm:py-20 bg-thrift-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="font-display text-3xl font-bold text-thrift-900 mb-6">About Thrifty Finds</h2>
+      <p class="text-thrift-700 text-lg leading-relaxed mb-4">
+        I dig through thrift stores, estate sales, and second-hand shops so you don’t have to. 
+        Every piece is cleaned, checked, and photographed honestly.
+      </p>
+      <p class="text-thrift-700 text-lg leading-relaxed">
+        This is a small demo shop right now — more finds coming soon. Thanks for supporting small and sustainable shopping!
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT / FOOTER ========== -->
+  <footer id="contact" class="bg-thrift-800 text-thrift-100 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xl">🧵</span>
+            <span class="font-display text-xl font-bold">Thrifty Finds</span>
+          </div>
+          <p class="text-thrift-300 text-sm">Pre-loved treasures, carefully chosen.</p>
+        </div>
         
-        <h2>Next Steps</h2>
-        <ul>
-            <li><strong>Customize it:</strong> Open this file in a text editor to change the text, headings, or colors.</li>
-            <li><strong>Publish it:</strong> Follow the GitHub Pages instructions provided to put it online for free.</li>
-            <li><strong>Expand it:</strong> Add images, links, or more sections as you learn.</li>
-        </ul>
-    </main>
+        <div class="text-sm text-thrift-300">
+          <p class="mb-1">Questions? Reach out:</p>
+          <!-- Replace with your real email -->
+          <a href="mailto:hello@thriftyfinds.demo" class="text-white hover:underline">hello@thriftyfinds.demo</a>
+        </div>
+      </div>
+      
+      <div class="mt-10 pt-6 border-t border-thrift-700 text-center text-xs text-thrift-400">
+        <p>© 2026 Thrifty Finds • Demo store • Built with ❤️ and GitHub Pages</p>
+      </div>
+    </div>
+  </footer>
 
-    <footer>
-        <p>&copy; 2026 My First Website. Built with pure HTML.</p>
-    </footer>
-
+  <!-- Simple mobile menu toggle -->
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+    
+    // Close mobile menu when a link is clicked
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+      });
+    });
+  </script>
 </body>
 </html>
